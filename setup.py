@@ -15,10 +15,10 @@ setup(
     long_description = long_description,
     long_description_content_type="text/markdown",
     test_suite='tests',
-    install_requires=["python-cloudflare",],
-    entry_points = {
-        'console_scripts': ['cfctl=cfctl.cfctl:main']
-    },
+    #install_requires=["python-cloudflare",],
+    #entry_points = {
+    #    'console_scripts': ['cfctl=cfctl.cfctl:main']
+    #},
     author="Jason Viloria",
     author_email="jnvilo@gmail.com",
     url="https://github.com/jnvilo/configsettings",

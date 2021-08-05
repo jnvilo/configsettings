@@ -2,6 +2,19 @@ import os
 from os.path import expanduser
 from pathlib import Path
 
+class ConfigSettingsVarDoesNotExist(Exception):
+    """
+    Raised when ConfigSettings is requested to provide a setthings
+    that was not exist in config_vars.
+    """
+    pass
+class ConfigSettingsVarNotFound(Exception):
+    """
+    Raised when a value for a defined configuration variable could not
+    be found.
+    """
+    pass
+
 class Configuration():
     """
     A global configuration object that be loaded and used to read
@@ -50,6 +63,9 @@ class Configuration():
     def __getattr__(self, item):
         if item in self.config_vars.keys():
             return self.get_config_var(item)
+        else:
+            msg = f"ConfigSettingsVar is not configured to provide {item}"
+            raise ConfigSettingsVarDoesNotExist(msg)
 
     def get_config_var(self,item):
         #First try to find it in the environment Vars
@@ -58,7 +74,7 @@ class Configuration():
         if value is not None:
             return value
         msg = f"Could not find value for: {item}"
-        raise ConfigSettingsNotFound(msg)
+        raise ConfigSettingsVarNotFound(msg)
 
         #If we get here it means we don't have the value.
         #try looking for a config file from the home dir.
